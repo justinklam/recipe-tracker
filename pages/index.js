@@ -1,8 +1,14 @@
-import Head from 'next/head'
-import Image from 'next/image'
-import styles from '../styles/Home.module.css'
+// Components
+import Head from "next/head";
+import Image from "next/image";
+import Link from "next/link";
 
-export default function Home() {
+// Styles
+import styles from "../styles/Home.module.css";
+
+export default function Home({ data }) {
+  const recipes = data.recipes;
+
   return (
     <div className={styles.container}>
       <Head>
@@ -12,12 +18,13 @@ export default function Home() {
       </Head>
 
       <main className={styles.main}>
-        <h1 className={styles.title}>
-          Welcome to <a href="https://nextjs.org">Next.js!</a>
-        </h1>
+        <h1 className={styles.title}>Recipe Tracker</h1>
+        <Link href="/about">
+          <a>{recipes[0].title}</a>
+        </Link>
 
         <p className={styles.description}>
-          Get started by editing{' '}
+          Get started by editing{" "}
           <code className={styles.code}>pages/index.js</code>
         </p>
 
@@ -58,12 +65,22 @@ export default function Home() {
           target="_blank"
           rel="noopener noreferrer"
         >
-          Powered by{' '}
+          Powered by{" "}
           <span className={styles.logo}>
             <Image src="/vercel.svg" alt="Vercel Logo" width={72} height={16} />
           </span>
         </a>
       </footer>
     </div>
-  )
+  );
+}
+
+export function getStaticProps() {
+  return {
+    props: {
+      data: {
+        recipes: [{ title: "Strawberry Smoothie" }],
+      },
+    },
+  };
 }
